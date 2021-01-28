@@ -14,12 +14,11 @@ class ToDo
 
   # タスク削除
   def delete(id:)
-    target_index = @tasks.find_index { |task| task.id == id }
-    if target_index.nil?
+    target_task = @tasks.find { |task| task.id == id }
+    if target_task.nil?
       puts unfound_message(add_id_message = true)
     else
-      target_task = @tasks[target_index]
-      @tasks.delete_at(target_index)
+      @tasks.delete(target_task)
       puts info_message(target_task, OPERATION[:delete])
     end
   end
@@ -41,16 +40,16 @@ class ToDo
     EOS
   end
 
-  # info 表示用のデータを返す
+  # info / operation 表示用のデータを返す
   def info_message(task, operation = "")
-    operation_message = operation.empty? ? "" : "【#{operation}】 "
-    operation_message << "[No.#{task.id}] #{task.title}:#{task.content}"
+    message = operation.empty? ? "" : "【#{operation}】 "
+    message << "[No.#{task.id}] #{task.title}:#{task.content}"
   end
 
   # undefind 表示用のデータを返す
   def unfound_message(add_id_message = false)
-    unfound_message = "【！】"
-    unfound_message <<= add_id_message ? "該当idの" : ""
-    unfound_message << "タスクはありません。"
+    message = "【！】"
+    message <<= add_id_message ? "該当idの" : ""
+    message << "タスクはありません。"
   end
 end
