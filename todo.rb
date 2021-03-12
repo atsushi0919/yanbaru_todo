@@ -1,6 +1,5 @@
 class ToDo
-  OPERATION = { add: "追加",
-                delete: "削除" }
+  OPERATION = { add: "追加", delete: "削除" }
 
   def initialize
     @tasks = []
@@ -9,17 +8,17 @@ class ToDo
   # タスク追加
   def add(task)
     @tasks << task
-    puts info_message(task, OPERATION[:add])
+    puts info_message task, operation: OPERATION[:add]
   end
 
   # タスク削除
   def delete(id:)
     target_task = @tasks.find { |task| task.id == id }
     if target_task.nil?
-      puts unfound_message(add_id_message = true)
+      puts unfound_message(add_id_message: true)
     else
-      @tasks.delete(target_task)
-      puts info_message(target_task, OPERATION[:delete])
+      @tasks.delete target_task
+      puts info_message target_task, operation: OPERATION[:delete]
     end
   end
 
@@ -41,15 +40,15 @@ class ToDo
   end
 
   # info / operation 表示用のデータを返す
-  def info_message(task, operation = "")
+  def info_message(task, operation: "")
     message = operation.empty? ? "" : "【#{operation}】 "
     message << "[No.#{task.id}] #{task.title}:#{task.content}"
   end
 
   # undefind 表示用のデータを返す
-  def unfound_message(add_id_message = false)
+  def unfound_message(add_id_message: false)
     message = "【！】"
-    message <<= add_id_message ? "該当idの" : ""
+    message <<= "該当idの" if add_id_message
     message << "タスクはありません。"
   end
 end
