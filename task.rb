@@ -3,10 +3,10 @@ class Task
 
   @@count = 0
 
-  def initialize(params)
+  def initialize(title:, content:)
     @id = @@count += 1
-    @title = params[:title]
-    @content = params[:content]
+    @title = title
+    @content = content
   end
 
   def info
