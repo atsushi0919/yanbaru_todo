@@ -93,10 +93,9 @@ class TodoApp < ToDo
 
   def validate_add_params(title:, content:)
     message = []
-    message << "件名を入力してください" if title.empty?
-    message << "件名は10文字以内です" if title.length > 10
-    message << "内容は40文字以内です" if content.length > 40
-    change_message_color(message: message.join("\n"), color: "red") unless message.empty?
-    message
+    message << "【！】件名を入力してください" if title.empty?
+    message << "【！】件名は10文字以内です" if title.length > 10
+    message << "【！】内容は40文字以内です" if content.length > 40
+    message.empty? ? "" : change_message_color(message: message.join("\n"), color: "red")
   end
 end
