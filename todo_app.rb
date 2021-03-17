@@ -6,8 +6,14 @@ class TodoApp < Todo
   def initialize(initial_operations)
     super()
     return if initial_operations.empty?
-    initial_operations.each do |operation|
-      execute_method(operation)
+    begin
+      initial_operations.each do |operation|
+        execute_method(operation)
+      end
+    rescue => e
+      message = "データ読み込み中にエラーが発生しました。\n" << e.message
+      puts change_message_color(message: message, color: "red")
+      exit
     end
   end
 
@@ -80,6 +86,6 @@ class TodoApp < Todo
       puts "ToDoアプリを終了します"
       exit
     end
-    self.public_send(*operation.values)
+    public_send(*operation.values)
   end
 end
