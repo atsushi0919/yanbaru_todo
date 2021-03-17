@@ -1,6 +1,4 @@
-class ToDo
-  OPERATION = { add: "追加", delete: "削除" }
-
+class Todo
   def initialize
     @tasks = []
   end
@@ -8,7 +6,7 @@ class ToDo
   # タスク追加
   def add(task)
     @tasks << task
-    puts info_message task, operation: OPERATION[:add]
+    puts info_message(task, operation: "追加")
   end
 
   # タスク削除
@@ -18,7 +16,7 @@ class ToDo
       puts unfound_message(add_id_message: true)
     else
       @tasks.delete target_task
-      puts info_message target_task, operation: OPERATION[:delete]
+      puts info_message(target_task, operation: "削除")
     end
   end
 
@@ -29,7 +27,7 @@ class ToDo
 
   private
 
-  # @tasks 一覧表示用のデータを返す
+  # @tasks 一覧表示を返す
   def tasks_info
     info_lines = @tasks.map { |task| info_message(task) }
     <<~EOS
@@ -39,16 +37,23 @@ class ToDo
     EOS
   end
 
-  # info / operation 表示用のデータを返す
+  # info / operation 表示用データを返す
   def info_message(task, operation: "")
     message = operation.empty? ? "" : "【#{operation}】 "
-    message << "[No.#{task.id}] #{task.title}:#{task.content}"
+    message << "[No.#{task.id}] #{task.title}: #{task.content}"
   end
 
-  # undefind 表示用のデータを返す
+  # undefind 表示用データを返す
   def unfound_message(add_id_message: false)
     message = "【！】"
     message <<= "該当idの" if add_id_message
     message << "タスクはありません。"
+    change_message_color(message: message, color: "red")
+  end
+
+  # 文字色を変更する
+  def change_message_color(message:, color:)
+    color_dict = { red: 31, green: 32 }
+    "\e[#{color_dict[color.to_sym]}m" << message << "\e[0m"
   end
 end
