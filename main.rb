@@ -16,9 +16,6 @@ end
 def main(manual)
   operations = manual ? [] : get_demo_operations
   todo_app = TodoApp.new(operations)
-  p todo_app
-  exit
-
   todo_app.start
 end
 
