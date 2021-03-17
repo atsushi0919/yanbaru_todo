@@ -9,6 +9,7 @@ class Task
     @content = content
   end
 
+  # タスク情報の表示
   def info
     puts "[No.#{@id}] #{@title}: #{@content}"
   end

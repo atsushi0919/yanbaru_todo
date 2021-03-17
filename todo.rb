@@ -40,7 +40,7 @@ class Todo
   # info / operation 表示用データを返す
   def info_message(task, operation: "")
     message = operation.empty? ? "" : "【#{operation}】 "
-    message << "[No.#{task.id}] #{task.title}:#{task.content}"
+    message << "[No.#{task.id}] #{task.title}: #{task.content}"
   end
 
   # undefind 表示用データを返す
@@ -48,5 +48,12 @@ class Todo
     message = "【！】"
     message <<= "該当idの" if add_id_message
     message << "タスクはありません。"
+    change_message_color(message: message, color: "red")
+  end
+
+  # 文字色を変更する
+  def change_message_color(message:, color:)
+    color_dict = { red: 31, green: 32 }
+    "\e[#{color_dict[color.to_sym]}m" << message << "\e[0m"
   end
 end
