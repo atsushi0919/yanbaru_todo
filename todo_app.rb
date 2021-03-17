@@ -2,7 +2,7 @@ require "io/console"
 require "./task"
 require "./todo"
 
-class TodoApp < Todo
+class TodoApp < ToDo
   def initialize(initial_operations)
     super()
     return if initial_operations.empty?
@@ -54,14 +54,10 @@ class TodoApp < Todo
 
   # タスクデータ入力
   def input_task_info
-    while true
-      print "件名 : "
-      title = STDIN.gets.chomp
-      print "内容 : "
-      content = STDIN.gets.chomp
-      break unless title.empty?
-      puts change_message_color(message: "件名は入力必須です", color: "red")
-    end
+    print "件名 : "
+    title = STDIN.gets.chomp
+    print "内容 : "
+    content = STDIN.gets.chomp
     { title: title, content: content }
   end
 
@@ -77,7 +73,13 @@ class TodoApp < Todo
     operation = { method: method }
     case method
     when :add
-      task = Task.new params.empty? ? input_task_info : params
+      params = input_task_info if params.empty?
+      error_message = validate_add_params(params)
+      unless error_message.empty?
+        puts error_message
+        return
+      end
+      task = Task.new(params)
       operation.merge!(argment: task)
     when :delete
       delete_id = params.empty? ? input_delete_id : params
@@ -87,5 +89,14 @@ class TodoApp < Todo
       exit
     end
     public_send(*operation.values)
+  end
+
+  def validate_add_params(title:, content:)
+    message = []
+    message << "件名を入力してください" if title.empty?
+    message << "件名は10文字以内です" if title.length > 10
+    message << "内容は40文字以内です" if content.length > 40
+    change_message_color(message: message.join("\n"), color: "red") unless message.empty?
+    message
   end
 end

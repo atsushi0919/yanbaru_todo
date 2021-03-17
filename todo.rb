@@ -1,4 +1,4 @@
-class Todo
+class ToDo
   def initialize
     @tasks = []
   end
