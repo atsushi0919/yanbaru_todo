@@ -16,7 +16,7 @@ end
 def main(manual)
   operations = manual ? [] : get_demo_operations
   todo_app = TodoApp.new(operations)
-  todo_app.start
+  #todo_app.start
 end
 
 main ARGV.include?("manual") ? true : false
