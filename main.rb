@@ -9,14 +9,18 @@ def get_demo_operations
    { method: :add, params: { title: "買物", content: "卵，ヨーグルト" } },
    { method: :delete, params: { id: 4 } },
    { method: :delete, params: { id: 3 } },
-   { method: :info },
-   { method: :quit }]
+   { method: :info }]
 end
 
 def main(manual)
-  operations = manual ? [] : get_demo_operations
-  todo_app = TodoApp.new(operations)
-  #todo_app.start
+  todo_app = TodoApp.new
+  if manual
+    todo_app.manual
+  else
+    get_demo_operations.each do |demo_operation|
+      todo_app.execute(**demo_operation)
+    end
+  end
 end
 
 main ARGV.include?("manual") ? true : false

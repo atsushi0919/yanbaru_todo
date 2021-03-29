@@ -1,16 +1,18 @@
+require "byebug"
+
 class ToDo
   def initialize
     @tasks = []
   end
 
   # タスク追加
-  def add(task)
+  def add(task:)
     @tasks << task
     puts info_message(task, operation: "追加")
   end
 
   # タスク削除
-  def delete(id:)
+  def delete(id: 0)
     target_task = @tasks.find { |task| task.id == id }
     if target_task.nil?
       puts unfound_message(add_id_message: true)
