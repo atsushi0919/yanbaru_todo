@@ -32,7 +32,12 @@ class TodoApp
       else
         args = params
       end
-      @todo.public_send(method, **args)
+      # ruby2.6以前用 double splat での空hash引数対策
+      if args.empty?
+        @todo.public_send(method)
+      else
+        @todo.public_send(method, **args)
+      end
     rescue => e
       message = "【！】エラーが発生しました\n"
       message << "#{e.class.to_s}, #{e.message}"
