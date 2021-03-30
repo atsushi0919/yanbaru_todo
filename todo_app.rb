@@ -1,36 +1,44 @@
 require "./task"
 require "./todo"
-require "./manual_interface"
-require "byebug"
+require "./manual"
+require "./message_color"
 
 class TodoApp
+  include MessageColor
+
   def initialize
     @todo = ToDo.new
-    @manual_interface = ManualInterface.new
+    @manual = Manual.new
   end
 
   # 手動入力
-  def manual
-    operation = {}
+  def input_manual(operation: {})
     while operation[:method] != :quit
-      operation = @manual_interface.input
+      operation = @manual.input
       execute(**operation)
     end
   end
 
   # 操作を実行する
   def execute(method:, params: {})
-    case method
-    when :add
-      return unless valid_add_params?(**params)
-      args = { task: Task.new(**params) }
-    when :quit
-      puts "手動入力を終了します"
-      return
-    else
-      args = params
+    begin
+      case method
+      when :add
+        return unless valid_add_params?(**params)
+        args = { task: Task.new(**params) }
+      when :quit
+        puts "手動入力を終了します"
+        return
+      else
+        args = params
+      end
+      @todo.public_send(method, **args)
+    rescue => e
+      message = "【！】エラーが発生しました\n"
+      message << "#{e.class.to_s}, #{e.message}"
+      puts change_message_color(message: message, color: "red")
+      exit
     end
-    @todo.public_send(method, **args)
   end
 
   def valid_add_params?(title:, content:)
@@ -44,12 +52,10 @@ class TodoApp
     if content.length > 40
       message << "【！】内容は40文字以内です"
     end
-    if message.empty?
-      return true
-    else
-      #puts @todo.change_message_color(message: message.join("\n"), color: "red")
-      puts message.join("\n")
-      return false
-    end
+
+    return true if message.empty?
+    message = message.join("\n")
+    puts change_message_color(message: message, color: "red")
+    false
   end
 end

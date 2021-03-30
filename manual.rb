@@ -1,7 +1,6 @@
 require "io/console"
-require "byebug"
 
-class ManualInterface
+class Manual
   # 手動入力
   def input
     put_command_info
