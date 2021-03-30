@@ -46,6 +46,7 @@ class TodoApp
     end
   end
 
+  # タスク生成時のパラメータ検証
   def valid_add_params?(title:, content:)
     message = []
     if title.empty?
