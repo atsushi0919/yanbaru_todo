@@ -1,16 +1,20 @@
+require "./message_color"
+
 class ToDo
+  include MessageColor
+
   def initialize
     @tasks = []
   end
 
   # タスク追加
-  def add(task)
+  def add(task:)
     @tasks << task
     puts info_message(task, operation: "追加")
   end
 
   # タスク削除
-  def delete(id:)
+  def delete(id: 0)
     target_task = @tasks.find { |task| task.id == id }
     if target_task.nil?
       puts unfound_message(add_id_message: true)
@@ -41,6 +45,13 @@ class ToDo
   def info_message(task, operation: "")
     message = operation.empty? ? "" : "【#{operation}】 "
     message << "[No.#{task.id}] #{task.title}: #{task.content}"
+    if operation == "追加"
+      change_message_color(message: message, color: "green")
+    elsif operation == "削除"
+      change_message_color(message: message, color: "yellow")
+    else
+      message
+    end
   end
 
   # undefind 表示用データを返す
@@ -49,11 +60,5 @@ class ToDo
     message <<= "該当idの" if add_id_message
     message << "タスクはありません。"
     change_message_color(message: message, color: "red")
-  end
-
-  # 文字色を変更する
-  def change_message_color(message:, color:)
-    color_dict = { red: 31, green: 32 }
-    "\e[#{color_dict[color.to_sym]}m" << message << "\e[0m"
   end
 end
