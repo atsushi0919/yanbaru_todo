@@ -13,16 +13,64 @@
 
 ### 開発環境
 
-ruby ~~2.6.6~~ 3.0.0
+開発: Ruby 3.0.0
+確認: Ruby 2.6.3, 2.6.6, 2.7.2, 3.0.0
 
-### プログラム実行方法
+### ファイルの説明
+
+- README.md ... このファイルです。
+- main.rb ... 動作確認用のプログラムです。
+- todo_app ... TodoApp クラスの定義ファイルです。
+- task.rb ... Task クラスの定義ファイルです。
+- todo.rb ... ToDo クラスの定義ファイルです。
+- manual.rb ... Manual クラスの定義ファイルです。
+- message_color.rb ... MessageColor モジュールの定義ファイルです。
+
+### TodoApp クラスのメソッドについて
+
+#### TodoApp#start
+
+`start()`
+手動入力画面が起動し、対話式で ToDo タスクの操作を行います。
+
+例
+
+```ruby
+require "./todo_app"
+
+todo_app = TodoApp.new
+todo_app.start
+```
+
+#### TodoApp#execute
+
+`execute(method:, params: {})`
+第 1 引数にメソッド、第 2 引数にメソッドに対応したパラメータのハッシュを指定し、 Todo タスクの操作を行います。
+
+例
+
+```ruby
+require "./todo_app"
+
+todo_app = TodoApp.new
+todo_app.execute(method: :add, params: { title: "洗濯", content: "7時までに干し終える" })
+todo_app.execute(method: :add, params: { title: "仕事", content: "9時〜18時" })
+todo_app.execute(method: :delete, params: { id: 1 })
+todo_app.execute(method: :info)
+```
+
+### 動作確認プログラム(main.rb)の実行方法
 
 ```
-# チャレンジ課題と同じ動作を確認する場合
+
+# チャレンジ課題と同じ動作のデモを行う
+
 ruby main.rb
 
-# マニュアル動作モード
+# 手動入力モードでプログラムを起動する
+
 ruby main.rb manual
+
 ```
 
 ### マニュアル動作モード時の仕様
