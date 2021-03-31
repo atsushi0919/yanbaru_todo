@@ -7,13 +7,15 @@ class TodoApp
   include MessageColor
 
   def initialize
+    @manual_mode = false
     @todo = ToDo.new
     @manual = Manual.new
   end
 
   # アプリケーションI/F起動
   def start(operation: {})
-    while operation[:method] != :quit
+    @manual_mode = true
+    while @manual_mode
       operation = @manual.input
       execute(**operation)
     end
@@ -28,7 +30,8 @@ class TodoApp
         return unless valid_add_params?(**params)
         args = { task: Task.new(**params) }
       when :quit
-        puts "手動入力を終了します"
+        puts "手動入力を終了します" if @manual_mode
+        @manual_mode = false
         return
       else
         args = params
