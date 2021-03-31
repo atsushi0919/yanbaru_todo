@@ -11,8 +11,8 @@ class TodoApp
     @manual = Manual.new
   end
 
-  # 手動入力
-  def input_manual(operation: {})
+  # アプリケーションI/F起動
+  def start(operation: {})
     while operation[:method] != :quit
       operation = @manual.input
       execute(**operation)
@@ -24,7 +24,7 @@ class TodoApp
     begin
       case method
       when :add
-        # 入力データが不正の場合、タスク追加をキャンセル
+        # パラメータが不正の場合、タスク追加をキャンセル
         return unless valid_add_params?(**params)
         args = { task: Task.new(**params) }
       when :quit
@@ -48,7 +48,7 @@ class TodoApp
     end
   end
 
-  # タスク生成時のパラメータ検証
+  # タスク追加時のパラメータ検証
   def valid_add_params?(title:, content:)
     message = []
     if title.empty?
