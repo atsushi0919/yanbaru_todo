@@ -15,7 +15,7 @@ end
 def main(manual)
   todo_app = TodoApp.new
   if manual
-    todo_app.input_manual
+    todo_app.start
   else
     get_demo_operations.each do |demo_operation|
       todo_app.execute(**demo_operation)

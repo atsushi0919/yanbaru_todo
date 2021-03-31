@@ -11,19 +11,20 @@ class TodoApp
     @manual = Manual.new
   end
 
-  # 手動入力
-  def input_manual(operation: {})
+  # アプリケーションI/F起動
+  def start(operation: {})
     while operation[:method] != :quit
       operation = @manual.input
       execute(**operation)
     end
   end
 
-  # 操作を実行する
+  # メソッドとパラメータを解読して操作を実行する
   def execute(method:, params: {})
     begin
       case method
       when :add
+        # パラメータが不正の場合、タスク追加をキャンセル
         return unless valid_add_params?(**params)
         args = { task: Task.new(**params) }
       when :quit
@@ -39,6 +40,7 @@ class TodoApp
         @todo.public_send(method, **args)
       end
     rescue => e
+      # エラーが発生した場合プログラムを強制終了する
       message = "【！】エラーが発生しました\n"
       message << "#{e.class.to_s}, #{e.message}"
       puts change_message_color(message: message, color: "red")
@@ -46,6 +48,7 @@ class TodoApp
     end
   end
 
+  # タスク追加時のパラメータ検証
   def valid_add_params?(title:, content:)
     message = []
     if title.empty?
