@@ -40,7 +40,7 @@ class ToDo
 
   # operation 実行成功時の表示 （追加: 緑, 削除: 黄）
   def info_message(task, method: "")
-    message = method.empty? ? "" : "【#{operation}】 "
+    message = method.empty? ? "" : "【#{method}】 "
     message << "[No.#{task.id}] #{task.title}: #{task.content}"
     if method == "追加"
       message = change_message_color(message: message, color: "green")
