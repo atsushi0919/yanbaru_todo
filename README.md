@@ -13,7 +13,7 @@
 
 ### 開発環境
 
-開発: Ruby 3.0.0
+開発: Ruby 3.0.0  
 確認: Ruby 2.6.3, 2.6.6, 2.7.2, 3.0.0
 
 ### ファイルの説明
@@ -31,10 +31,10 @@
 #### TodoApp#start
 
 `start()`
-手動入力画面が起動し、対話式で ToDo タスクの操作を行います。
 
-例
+手動入力画面が起動し、対話式で ToDo タスクの操作を行うことが出来ます。
 
+例  
 ```ruby
 require "./todo_app"
 
@@ -45,10 +45,10 @@ todo_app.start
 #### TodoApp#execute
 
 `execute(method:, params: {})`
+
 第 1 引数にメソッド、第 2 引数にメソッドに対応したパラメータのハッシュを指定し、 Todo タスクの操作を行います。
 
-例
-
+例  
 ```ruby
 require "./todo_app"
 
@@ -61,19 +61,15 @@ todo_app.execute(method: :info)
 
 ### 動作確認プログラム(main.rb)の実行方法
 
-```
+チャレンジ課題と同じ動作のデモを行う
 
-# チャレンジ課題と同じ動作のデモを行う
+`ruby main.rb`
 
-ruby main.rb
+手動入力モードでプログラムを起動する
 
-# 手動入力モードでプログラムを起動する
+`ruby main.rb manual`
 
-ruby main.rb manual
-
-```
-
-### マニュアル動作モード時の仕様
+### TodoApp の仕様
 
 - タスクの件名は入力必須となっています。
 - タスクの件名文字数は 10 文字までとなっています。
