@@ -11,6 +11,16 @@
 - ToDo リストは，タスクの追加・一覧表示・削除の機能を持つ
 - タスクの削除は，ID を指定して行う
 
+### 動作確認プログラム(main.rb)の実行方法
+
+チャレンジ課題と同じ動作のデモを行う
+
+`ruby main.rb`
+
+手動入力モードでプログラムを起動する
+
+`ruby main.rb manual`
+
 ### 開発環境
 
 開発: Ruby 3.0.0  
@@ -34,7 +44,8 @@
 
 手動入力画面が起動し、対話式で ToDo タスクの操作を行うことが出来ます。
 
-例  
+例
+
 ```ruby
 require "./todo_app"
 
@@ -48,7 +59,8 @@ todo_app.start
 
 第 1 引数にメソッド名、第 2 引数にメソッドに必要なパラメータをハッシュで指定し、 Todo タスクの操作を行います。
 
-例  
+例
+
 ```ruby
 require "./todo_app"
 
@@ -58,16 +70,6 @@ todo_app.execute(method: :add, params: { title: "仕事", content: "9時〜18時
 todo_app.execute(method: :delete, params: { id: 1 })
 todo_app.execute(method: :info)
 ```
-
-### 動作確認プログラム(main.rb)の実行方法
-
-チャレンジ課題と同じ動作のデモを行う
-
-`ruby main.rb`
-
-手動入力モードでプログラムを起動する
-
-`ruby main.rb manual`
 
 ### TodoApp の仕様
 

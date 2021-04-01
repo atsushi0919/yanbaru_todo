@@ -9,15 +9,15 @@ class TodoApp
   def initialize
     @manual_mode = false
     @todo = ToDo.new
-    @manual = Manual.new
   end
 
-  # アプリケーションI/F起動
-  def start(operation: {})
+  # 手動入力 I/F起動
+  def start
     @manual_mode = true
+    manual = Manual.new
+
     while @manual_mode
-      operation = @manual.input
-      execute(**operation)
+      execute(**manual.input)
     end
   end
 
